@@ -6,7 +6,7 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'author', 'status', 'is_featured')
     # category__category_name = from foreign key we want category_name
     search_fields = ('id', 'title', 'category__category_name', 'status',)
-    list_editable = ('is_featured',)
+    list_editable = ('is_featured', 'status',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
