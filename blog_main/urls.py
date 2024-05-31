@@ -26,9 +26,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('category/', include('blogs.urls')),
-    path('<slug:slug>/', BlogViews.single_blog, name='single_blog'),
+    path('blog/<slug:slug>/', BlogViews.single_blog, name='single_blog'),
     
     # Search endpoint
     path('blogs/search/', BlogViews.search , name='search'),
+    
+    # Register url patterns
+    path('register/', views.register , name='register'),
+    
+    # Login url pattern
+    path('login/', views.login , name='login'),
+    
+    #Log out
+    path('logout/', views.logout, name='logout'),
+    
+    
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
