@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Blog, Category
 
+# Allows so make complex queries like OR
+from django.db.models import Q
+
 # Create your views here.
 
 def posts_by_category(request, category_id):
@@ -14,10 +17,36 @@ def posts_by_category(request, category_id):
     #     return redirect('home')
     
     # User get_object_or_404 when you want show 404 error page - 404.html or whatever error code.
+    
     category = get_object_or_404(Category, pk=category_id)
     
     context = {
         'posts': posts,
         'category':category
     }
+    
     return render(request, 'posts_category.html', context=context)
+
+def single_blog(request, slug):
+    single_blog = get_object_or_404(Blog, slug=slug, status='Published')
+    context = {
+        'single_post': single_blog,
+    }
+    
+    return render(request, 'blog.html', context=context)
+
+
+def search(request):
+    keyword = request.GET.get('keyword')
+    if keyword:
+        blogs = Blog.objects.filter(Q(title__icontains=keyword) | Q(short_description__icontains=keyword) | Q(blog_body__icontains=keyword), status='Published', )
+        context = {
+        'blogs':blogs,
+        'keyword':keyword,
+    }
+    else:
+        context = {
+        'blogs':None,
+    }
+    
+    return render(request, 'search.html', context=context)

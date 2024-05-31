@@ -13,6 +13,7 @@ class CategoryAdmin(admin.ModelAdmin):
     def save_model(self, request, obj,form,change):
         obj.name = obj.name.title()
         super().save_model(request,obj,form,change)
+ 
 
 # Register your models here.
 admin.site.register(Category)
