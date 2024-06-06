@@ -6,7 +6,7 @@ from assignments.models import SocialMedia
 
 
 def get_categories(request):
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('created_at')
     
     return dict(categories = categories)
 

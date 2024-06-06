@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from assignments.models import About, SocialMedia
+from assignments.models import About
 from blogs.models import Blog
 from .forms import RegisterForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -55,7 +55,7 @@ def login(request):
             if user is not None:
                 auth.login(request, user)
             
-            return redirect('home')
+            return redirect('dashboard')
         
         else:
             print(form.errors)

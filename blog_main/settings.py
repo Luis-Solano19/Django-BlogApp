@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'assignments',
     'crispy_forms',
     'crispy_bootstrap4',
+    'dashboards',
 ]
 
 MIDDLEWARE = [
@@ -82,8 +83,12 @@ WSGI_APPLICATION = 'blog_main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blogapp',
+        'USER': 'luis',
+        'PASSWORD': 'alexatp19',
+        'HOST': 'localhost',  # Or your database host
+        'PORT': '',           # Leave empty for default
     }
 }
 
