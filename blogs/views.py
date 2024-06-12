@@ -1,6 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Blog, Category
+from .models import Blog, Category, Comment
 
 # Allows so make complex queries like OR
 from django.db.models import Q
@@ -29,8 +29,23 @@ def posts_by_category(request, category_id):
 
 def single_blog(request, slug):
     single_blog = get_object_or_404(Blog, slug=slug, status='Published')
+    if request.method == "POST":
+        comment = Comment()
+        comment.user = request.user # person who is logged in is writing comment
+        comment.blog = single_blog
+        comment.comment = request.POST['comment']
+        comment.save()
+        return HttpResponseRedirect(request.path_info) # returns to page where you are.
+        
+        
+    #Comments
+    comments = Comment.objects.filter(blog = single_blog)
+    comments_count = comments.count()
+    
     context = {
         'single_post': single_blog,
+        'comments':comments,
+        'comments_count':comments_count,
     }
     
     return render(request, 'blog.html', context=context)
